@@ -41,7 +41,12 @@ function getUserDepartment() {
 
   # next, try looking this person up in ldap
   $cn = getWebUserName();
-  list($first, $last) = explode(" ",$cn,2);
+  if(strpos($cn, " ") !== false) {
+    list($first, $last) = explode(" ", $cn, 2);
+  } else {
+    $first = "";
+    $last = "";
+  }
   $email = getWebUserEmail();
   $results = getLdapInfo($first,"",$last,$email,REMOTE_USER_NETID);
   $ldap_department = $results && array_key_exists("department",$results) ? $results["department"] : '';
