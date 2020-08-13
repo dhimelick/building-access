@@ -1,5 +1,7 @@
-SSLRequireSSL
 AuthType shibboleth
-ShibRequestSetting requireSession 1
-require valid-user
-Allow from all
+ShibRequireSession on
+ShibUseHeaders on
+require shib-attr isMemberOf uw:domain:lss.wisc.edu:0482_DEPTS 
+#<requireAll>
+#	require shib-session
+#</requireAll>
