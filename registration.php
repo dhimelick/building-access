@@ -80,7 +80,7 @@ function showRequestForm() {
   else {
     echo "<div class='field-input'>";
     echo "<select name='department' id='department'>";
-    echo "<option value=''>Choose your department</option>";
+    echo "<option value=''>Choose your floor</option>";
     foreach( DEPARTMENTS as $department ) {
       $selected = $default_department == $department ? "selected" : "";
       echo "<option value='",htmlescape($department),"' $selected/>",htmlescape($department),"</option>";
