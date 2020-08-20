@@ -80,7 +80,7 @@ function showRequestForm() {
   else {
     echo "<div class='field-input'>";
     echo "<select name='department' id='department'>";
-    echo "<option value=''>Choose your department</option>";
+    echo "<option value=''>Choose your floor</option>";
     foreach( DEPARTMENTS as $department ) {
       $selected = $default_department == $department ? "selected" : "";
       echo "<option value='",htmlescape($department),"' $selected/>",htmlescape($department),"</option>";
@@ -152,7 +152,7 @@ function showRequestForm() {
 
   echo "<div class='field-title'>Repeat through</div><div class='field-input'>";
   $cur_month_name = date("F",strtotime($cur_day));
-  for($month_offset=0; $month_offset<2; $month_offset++) {
+  for($month_offset=0; $month_offset<5; $month_offset++) {
     $end_of_month_date = getEndOfMonth($cur_day,$month_offset);
     $month_name = date("F",strtotime($end_of_month_date));
 
