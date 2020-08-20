@@ -3,7 +3,7 @@
 # Override stuff in here by defining these variables in your config.php.
 
 if( !defined('WEB_APP_TITLE') ) {
-  define('WEB_APP_TITLE',"Van Hise Building Schedule");
+  define('WEB_APP_TITLE',"Building Schedule");
 }
 
 if( !defined('ABOUT_PAGE') ) {
