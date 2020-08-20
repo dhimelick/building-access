@@ -1,16 +1,16 @@
 <?php
 
 const DEPT_ADMINS = array(
-  "Physics"   => array("dcbradley","srdasu","anlefkow"),
-  "Astronomy" => array("sheinz","sjanderson3"),
+  "Astronomy" => array("netid1","netid2"),
+  "Physics"   => array("netid1","netid3","netid4"),
 );
 
 const DEPT_ADMIN_EMAILS = array(
-  "Astronomy"                  => "heinzs@astro.wisc.edu,dan@physics.wisc.edu",
-  "Gender and Women's Studies" => "dan@physics.wisc.edu",
-  "Mathematics"                => "dan@physics.wisc.edu",
-  "Physics"                    => "dasu@hep.wisc.edu,lefkow@hep.wisc.edu,dan@physics.wisc.edu",
-  "Survey Center"              => "dan@physics.wisc.edu",
+  "Astronomy"                  => "example1@wisc.edu,example2@wisc.edu",
+  "Gender and Women's Studies" => "example1@wisc.edu",
+  "Mathematics"                => "example1@wisc.edu",
+  "Physics"                    => "example1@wisc.edu,example3@wisc.edu,example4@wisc.edu",
+  "Survey Center"              => "example1@wisc.edu",
 );
 
 const FROM_NAME = "Building Access Registrations";
@@ -55,6 +55,30 @@ const DEPT_DEFAULT_BUILDING = array(
 );
 
 const UNKNOWN_DEPT_DEFAULT_BUILDING = "";
+
+# Optional manifest group that specifies who can see the names of
+# occupants in a building.  If no group is specified for a building,
+# this configuration setting does not limit visibility.  Multiple
+# groups may be listed for a building by using an array of strings
+# rather than a single string; if the viewer does not match any
+# group, visibility is restricted.  Note that people can always
+# see their own name.
+#
+# The manifest groups must be linked to shibboleth on your website.
+# See https://kb.wisc.edu/26440 for tips on how to set that up.
+# See https://kb.wisc.edu/30150 for tips on how to use UDDS employee
+# lists in manifest groups.  Note that existing shibboleth sessions do
+# not get updated when you change the manifest configuration.
+#
+# Note that if you wish to restrict access to the form altogether
+# rather than just anonymizing occupants, you can add an entry in
+# .htaccess of the form:
+# require shib-attr isMemberOf <your manifest group>
+
+const BUILDING_VISIBILITY_MANIFEST_GROUP = array(
+  "Chamberlin" => "uw:domain:physics.wisc.edu:chamberlin_occupants",
+  "Sterling" => "uw:domain:physics.wisc.edu:sterling_occupants",
+);
 
 # Optional function to rewrite rooms to canonical form.
 # This is useful if there is more than one name for a room.
