@@ -44,8 +44,11 @@ if( $building_sql ) {
 }
 
 $cur_day = $_REQUEST["day"];
-$slot_minutes = $_REQUEST["slot_minutes"];
-$filter_room = isset($_REQUEST["room"]) ? $_REQUEST["room"] : "";
+if( $cur_day == "" ) {
+  $cur_day = date("Y-m-d");
+}
+$slot_minutes = array_key_exists('slot_minutes',$_REQUEST) ? $_REQUEST["slot_minutes"] : 60;
+$filter_room = array_key_exists('room',$_REQUEST) ? $_REQUEST["room"] : "";
 $filter_room = canonicalRoomList($filter_room,$building);
 
 $filter_room_regex = "";
@@ -56,6 +59,20 @@ foreach( preg_split("{ *, *}",$filter_room) as $room ) {
 }
 if( $filter_room_regex ) {
   $filter_room_regex = "{^(" . $filter_room_regex . ")}i";
+}
+
+$allowed_hours = null;
+if( $cur_day ) {
+  $times = getAllowedTimes24Array($cur_day,REGISTRATION_HOURS);
+  $allowed_hours = array();
+  foreach( $times as $hours ) {
+    $min_hour = (int)explode(":",$hours['start'])[0];
+    $max_hour = (int)explode(":",$hours['end'])[0];
+
+    for( $hour=$min_hour; $hour < $max_hour; $hour++ ) {
+      $allowed_hours[] = $hour;
+    }
+  }
 }
 
 $min_hour = 0;
@@ -167,7 +184,7 @@ for( $hour=0; $hour < 24; $hour++ ) {
           if( !matchRoom($filter_room_regex,$this_floor_rooms) ) continue;
           $this_floor_rooms = implode(",",$this_floor_rooms);
 	  $occupant = htmlescape($row["NAME"]) . " ";
-	  if( !isVisible($row["NETID"],$room,$row["BUILDING"]) ) {
+	  if( !isVisible($row["NETID"],$room,$row["BUILDING"],$row["DEPARTMENT"],getPrivacy($row)) ) {
 	    $occupant = "<i class='fas fa-shoe-prints'></i>";
 	    $extra_info = $invisible_extra_info;
 	  }
@@ -198,6 +215,9 @@ for( $hour=0; $hour < 24; $hour++ ) {
       }
     }
 
+    if( $slotinfo == "" && $allowed_hours && !in_array($hour,$allowed_hours) ) {
+      $slotinfo = "hide";
+    }
     $results[$vname] = $slotinfo;
 
     $count_in_building_stmt->bindValue(":START_TIME",$start_time);

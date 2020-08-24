@@ -1,5 +1,12 @@
 <?php
 
+const WEB_APP_TITLE = "Building Access";
+
+# To disable the About page, you can set it to null.
+# Otherwise, set it to a string containing the HTML that you want displayed.
+# See post_config.php for the default value.
+# const ABOUT_PAGE = null
+
 const DEPT_ADMINS = array(
   "Astronomy" => array("netid1","netid2"),
   "Physics"   => array("netid1","netid3","netid4"),
@@ -66,9 +73,18 @@ const UNKNOWN_DEPT_DEFAULT_BUILDING = "";
 #
 # The manifest groups must be linked to shibboleth on your website.
 # See https://kb.wisc.edu/26440 for tips on how to set that up.
-# See https://kb.wisc.edu/30150 for tips on how to use UDDS employee
-# lists in manifest groups.  Note that existing shibboleth sessions do
-# not get updated when you change the manifest configuration.
+# Basically, just create a new group and paste the shibboleth entityID
+# into the SAML2 entity ID field under Advanced Options.  See
+# https://kb.wisc.edu/30150 for tips on how to use UDDS employee lists
+# in manifest groups.  An example: create a group and then after
+# clicking Add Members, enter something like
+# uw:ref:hr_system:job:current:udds:A:A48:A4812:all_A4812 in the 'Add
+# group member' field.  Wait a minute for the spinny thing to stop
+# spinning, then select the group from the drop-down list that
+# appears, and then click Save.  Note that existing shibboleth
+# sessions do not get updated when you change the manifest
+# configuration.  It can also take a few minutes for changed manifest
+# configuration to take effect even for newly created sessions.
 #
 # Note that if you wish to restrict access to the form altogether
 # rather than just anonymizing occupants, you can add an entry in
@@ -79,6 +95,17 @@ const BUILDING_VISIBILITY_MANIFEST_GROUP = array(
   "Chamberlin" => "uw:domain:physics.wisc.edu:chamberlin_occupants",
   "Sterling" => "uw:domain:physics.wisc.edu:sterling_occupants",
 );
+
+# Whether people's names should be hidden by default or not.
+# When private, names are only shown to administrators of the app.
+const DEFAULT_PRIVACY = false;
+
+# Whether a checkbox should be displayed allowing people to override
+# the default privacy setting.  If you are using an old database
+# schema, you should not set this to true until you have added a
+# PRIVACY column.  Example mysql command:
+# alter table building_access add column PRIVACY char(1) not null default '';
+const USER_SETTABLE_PRIVACY = false;
 
 # Optional function to rewrite rooms to canonical form.
 # This is useful if there is more than one name for a room.
@@ -120,7 +147,10 @@ const REQUEST_FORM_HEADER = "
   href='https://hr.wisc.edu/covid19/workplace-training/'>COVID-19 Safety Training</a>.  See
   also <a href='ResearchRestartPIMessage.pdf'>L&amp;S Research Restart
   Message</a> and <a href='BuildingGuidelines.pdf'>Guidelines for
-  working in Chamberlin and Sterling Hall</a>.</p> ";
+  working in Chamberlin and Sterling Hall</a>.  There is also a <a
+  href='https://dataviz.wisc.edu/#/views/Student-InstructorBuildingDensityTool_15959408660590/StudentInstructorDensityCalculations?:iid=1'
+  >density map</a> for instructional activities that may be
+  helpful.</p> ";
 
 const SUCCESS_REGISTRATION_MSG = "Recommended entrances, exits, stairwells, bathrooms, and other notes may be found in <a href='BuildingGuidelines.pdf'>Guidelines for working in Chamberlin and Sterling Hall</a>. If you feel unwell, <em>do not</em> enter the building.";
 
@@ -130,7 +160,9 @@ function PARSE_ROOM_BUILDING($input_room,$department,&$room,&$building) {
 }
 
 # max capacity per floor
-const BUILDING_FLOOR_MAX_CAP = null;
+const BUILDING_FLOOR_MAX_CAP = array(
+  "Chamberlin" => array("1" => 10, "default" => 30),
+);
 
 # show safety monitor signup page?
 const SAFETY_MONITOR_SIGNUP = false;
