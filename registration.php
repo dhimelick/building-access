@@ -243,7 +243,7 @@ function showRequestForm() {
     echo "</div>\n";
   }
 
-  echo "<div id='missing_department' class='alert alert-danger' style='display: none'>Please select your department.</div>\n";
+  echo "<div id='missing_department' class='alert alert-danger' style='display: none'>Please select your floor.</div>\n";
   echo "<div id='missing_room' class='alert alert-danger' style='display: none'>You must specify a room.</div>\n";
   echo "<div id='missing_time' class='alert alert-danger' style='display: none'>You must specify a starting and ending time.</div>\n";
 
