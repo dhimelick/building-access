@@ -347,15 +347,14 @@ function getRoomCap($room,$building) {
 }
 
 function getFloor($room) {
+  if (strlen($room) == 4) {
+    return strtoupper(substr($room,0,2));
+  }
   return strtoupper(substr($room,0,1));
 }
 
 function compare_floors($floor1,$floor2) {
-  $ch1_isdigit = strncmp($floor1,'0',1) >= 0 && strncmp($floor1,'9',1) <= 0;
-  $ch2_isdigit = strncmp($floor2,'0',1) >= 0 && strncmp($floor2,'9',1) <= 0;
-  if( $ch1_isdigit && $ch2_isdigit ) return -strcmp($floor1,$floor2);
-  if( $ch1_isdigit && !$ch2_isdigit ) return -1;
-  if( !$ch1_isdigit && $ch2_isdigit ) return 1;
+  if (is_numeric($floor1) && is_numeric($floor2)) return (int) $floor2 - (int) $floor1;
   return -strcmp($floor1,$floor2);
 }
 
