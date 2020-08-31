@@ -1,4 +1,5 @@
 AuthType shibboleth
 ShibRequireSession on
-require valid-user
-
+#require valid-user
+ShibUseHeaders on
+require shib-attr isMemberOf uw:domain:lss.wisc.edu:0482_DEPTS 
