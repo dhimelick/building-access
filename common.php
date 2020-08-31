@@ -347,9 +347,24 @@ function getRoomCap($room,$building) {
 }
 
 function getFloor($room) {
-  if (strlen($room) == 4) {
-    return strtoupper(substr($room,0,2));
+  # parse the room string to look for a number
+  $rnum = false;
+  $parts = preg_split("/(,?\s+)|((?<=[a-z])(?=\d))|((?<=\d)(?=[a-z]))/i", $room);
+  foreach ($parts as $part) {
+    if (is_numeric($part)) {
+      $rnum = $part;
+      break;
+    }
   }
+
+  if ($rnum) {
+    if (strlen($rnum) == 4) {
+      return substr($rnum,0,2);
+    } else {
+      return substr($rnum,0,1);
+    }
+  }
+
   return strtoupper(substr($room,0,1));
 }
 
