@@ -137,6 +137,7 @@ function downloadCSV() {
   $F = fopen('php://output','w');
 
   $row = array();
+  $row[] = "Who";
   $row[] = "Date";
   $row[] = "Start";
   $row[] = "End";
@@ -160,6 +161,7 @@ function downloadCSV() {
   while( ($db_row=$stmt->fetch()) ) {
     $csv_row = array();
 
+    $csv_row[] = $db_row['NAME'];
     $csv_row[] = date("Y-m-d",strtotime($db_row['START_TIME']));
     $csv_row[] = date('H:i',strtotime($db_row['START_TIME']));
     $csv_row[] = date('H:i',strtotime($db_row['END_TIME']));
