@@ -7,6 +7,14 @@
 # All optional configuration variables are given a default value here
 # in case they are not defined in config.php.
 
+if( !defined('ALLOW_ADMIN_ACT_AS') ) {
+  define('ALLOW_ADMIN_ACT_AS',true);
+}
+
+if( !defined('REMOTE_USER_NETID') ) {
+  setRemoteUser();
+}
+
 if( !defined('WEB_APP_TITLE') ) {
   define('WEB_APP_TITLE',"Building Access");
 }
@@ -34,7 +42,7 @@ welcome.</p>
 }
 
 if( !defined('BUILDING_VISIBILITY_MANIFEST_GROUP') ) {
-  define('BUILDING_VISIBILITY_MANIFEST_GROUP',array());
+  define('BUILDING_VISIBILITY_MANIFEST_GROUP',null);
 }
 
 if( !defined('DEFAULT_PRIVACY') ) {
@@ -44,4 +52,8 @@ if( !defined('DEFAULT_PRIVACY') ) {
 if( !defined('USER_SETTABLE_PRIVACY') ) {
   # default to false, so old database schema lacking PRIVACY column still works if the admin doesn't take action
   define('USER_SETTABLE_PRIVACY',false);
+}
+
+if( !defined('SHOW_ANONYMOUS_ROOM_OCCUPANCY') ) {
+  define('SHOW_ANONYMOUS_ROOM_OCCUPANCY',true);
 }

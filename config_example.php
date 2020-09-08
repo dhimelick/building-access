@@ -20,6 +20,9 @@ const DEPT_ADMIN_EMAILS = array(
   "Survey Center"              => "example1@wisc.edu",
 );
 
+# Allow administrators to act as other people when using the building access form.
+const ALLOW_ADMIN_ACT_AS = true;
+
 const FROM_NAME = "Building Access Registrations";
 
 const FROM_EMAIL = "it-staff@physics.wisc.edu";
@@ -106,6 +109,10 @@ const DEFAULT_PRIVACY = false;
 # PRIVACY column.  Example mysql command:
 # alter table building_access add column PRIVACY char(1) not null default '';
 const USER_SETTABLE_PRIVACY = false;
+
+# In the occupancy list, should rooms occupied by anonymous
+# people be listed?
+const SHOW_ANONYMOUS_ROOM_OCCUPANCY = true;
 
 # Optional function to rewrite rooms to canonical form.
 # This is useful if there is more than one name for a room.
