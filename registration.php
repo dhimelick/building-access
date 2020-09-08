@@ -243,9 +243,6 @@ function showRequestForm() {
     echo "</div>\n";
   }
 
-<<<<<<< HEAD
-  echo "<div id='missing_department' class='alert alert-danger' style='display: none'>Please select your floor.</div>\n";
-=======
   if( isRealDeptAdmin() ) {
     $admin_options_visible = false;
     echo "<div class='card' id='admin_options' style='display: none;'><div class='card-body'><h5 class='card-title'>Admin Options</h5>\n";
@@ -283,8 +280,7 @@ function showRequestForm() {
     echo "<div class='alert alert-info'>You are editing this form on behalf of ",htmlescape(REMOTE_USER_NETID),".</div>\n";
   }
 
-  echo "<div id='missing_department' class='alert alert-danger' style='display: none'>Please select your department.</div>\n";
->>>>>>> upstream/master
+  echo "<div id='missing_department' class='alert alert-danger' style='display: none'>Please select your floor.</div>\n";
   echo "<div id='missing_room' class='alert alert-danger' style='display: none'>You must specify a room.</div>\n";
   echo "<div id='missing_time' class='alert alert-danger' style='display: none'>You must specify a starting and ending time.</div>\n";
 
