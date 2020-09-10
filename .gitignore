@@ -2,3 +2,5 @@ config.php
 db.php
 bootstrap/
 approvals/
+*.swp
+

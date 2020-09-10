@@ -308,7 +308,7 @@ function showRequestForm() {
     echo " <input type='submit' name='submit' value='Delete' />";
     echo " <input type='submit' name='submit' value='Clear' />";
   }
-  if( isRealDeptAdmin() && !$admin_options_visible ) {
+  if( SHOW_ADMIN_OPTIONS && isRealDeptAdmin() && !$admin_options_visible ) {
     echo " <input type='submit' name='admin_options' id='admin_options_button' value='Admin Options' onclick='showAdminOptions(); return false'/>";
   }
   echo "</p>\n";
