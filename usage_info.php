@@ -132,6 +132,7 @@ for( $hour=0; $hour < 24; $hour++ ) {
       }
     }
 
+    $floor_occupants = array();
     foreach( $usage_entries as $row ) {
       $purpose = $row["PURPOSE"];
       $timespan = date("H:i",strtotime($row["START_TIME"])) . "-" . date("H:i",strtotime($row["END_TIME"]));
@@ -185,6 +186,8 @@ for( $hour=0; $hour < 24; $hour++ ) {
           $floor = getFloor($room);
           if( array_key_exists($floor,$floors_done) ) continue;
           $floors_done[$floor] = 1;
+          if( array_key_exists($floor,$floor_occupants) ) $floor_occupants[$floor][$row["NETID"]] = true;
+          else $floor_occupants[$floor] = array($row["NETID"] => true);
 
           $this_floor_rooms = array();
           foreach( $rooms as $this_floor_room ) {
@@ -217,7 +220,10 @@ for( $hour=0; $hour < 24; $hour++ ) {
 
     if( $organize_reservations_by_floor ) {
       uksort($slotinfo_floor,'compare_floors');
-      foreach( $slotinfo_floor as $floor ) {
+      foreach( $slotinfo_floor as $floornum => $floor ) {
+        if( array_intersect(FLOOR_TO_DEPT[$floornum],getAdminDepartments()) && REAL_REMOTE_USER_NETID == REMOTE_USER_NETID ) {
+          $slotinfo .= "<div class='floor-usage-summary'><strong>Floor " . $floornum . " occupants: " . count($floor_occupants[$floornum]) . "</strong></div>";
+        }
         $slotinfo .= "<div class='floor-usage-entry'>";
         uksort($floor,'compare_rooms');
         foreach( $floor as $room ) {

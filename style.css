@@ -189,6 +189,11 @@ h1 {
     min-width: 25em;
 }
 
+.floor-usage-summary {
+    display: block;
+    background-color: #D0D0D0;
+}
+
 .floor-usage-entry {
     display: block;
     background-color: #D0D0D0;
