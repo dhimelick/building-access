@@ -148,7 +148,9 @@ function checkRoomCaps(&$why_not_approved,&$warnings,$request) {
     $peak_cap = 1 + count($overlaps);
     if( $peak_cap > $maxcap ) {
       $result = false;
-      $why_not_approved[] = "Room " . $room . " would have {$peak_cap} people in it simultaneously, which exceeds the agreed limit of {$maxcap}.  " . conflictDesc($overlaps);
+      if( SHOW_ANONYMOUS_ROOM_OCCUPANCY ) {
+        $why_not_approved[] = "Room " . $room . " would have {$peak_cap} people in it simultaneously, which exceeds the agreed limit of {$maxcap}.  " . conflictDesc($overlaps);
+      }
     }
     else if( $peak_cap > $normcap ) {
       $room_desc = "";
